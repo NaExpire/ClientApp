@@ -1,6 +1,7 @@
 # Cafe Redux Client App
 
 ## Getting Started
+The application can be run on a virtual machine or Android device. The app is not available for download via the Google Play Store.
 
 ### Prerequisites
 
