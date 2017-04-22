@@ -1,0 +1,50 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp"
+    tools:context="com.capstone.naexpire.naexpireclient.FragmentEditFoodTypes">
+
+    <TextView
+        android:id="@+id/lblPrefdivider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/lblPrefdivider"
+        android:text="Food Preferences"
+        android:textColor="@color/colorAccent"
+        android:background="@android:color/transparent"/>
+
+    <Button
+        android:id="@+id/btnPrefUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/lblPrefdivider"
+        android:text="Account Details"
+        android:textColor="@color/colorAccent"
+        android:background="@android:color/transparent"/>
+
+    <Button
+        android:id="@+id/btnPrefSaveFoods"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="Save Changes"
+        android:textColor="@color/colorAccent"
+        android:background="@android:color/transparent"/>
+
+    <ListView
+        android:id="@+id/lstPrefFoods"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnPrefUser"
+        android:layout_above="@id/btnPrefSaveFoods"
+        android:divider="@null"
+        android:dividerHeight="0dp"/>
+
+</RelativeLayout>

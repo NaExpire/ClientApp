@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imgDiscountPicture"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:scaleType="centerCrop"/>
+
+    <RelativeLayout
+        android:id="@+id/rlDiscount"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignBottom="@id/imgDiscountPicture"
+        android:background="@color/colorListShade">
+
+        <TextView
+            android:id="@+id/lblDiscountPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="8dp"
+            android:text="$X.XX"
+            android:textSize="25dp"
+            android:textColor="@color/colorAccent"/>
+
+        <TextView
+            android:id="@+id/lblDiscountQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:text="Q"
+            android:textColor="@android:color/background_light"
+            android:textSize="25dp"/>
+
+        <RelativeLayout
+            android:id="@+id/rlInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/lblDiscountQuantity"
+            android:paddingLeft="8dp">
+
+            <TextView
+                android:id="@+id/lblDiscountName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Item Name"
+                android:textColor="@android:color/background_light"
+                android:textStyle="bold"
+                android:textSize="15dp"/>
+
+            <TextView
+                android:id="@+id/lblDiscountRest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lblDiscountName"
+                android:layout_alignLeft="@id/lblDiscountName"
+                android:text="Rest Name"
+                android:textColor="@android:color/background_light"
+                android:textSize="10dp"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

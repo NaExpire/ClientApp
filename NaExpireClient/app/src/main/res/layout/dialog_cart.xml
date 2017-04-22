@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imgItem"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp">
+
+        <TextView
+            android:id="@+id/lblItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Item Name" />
+
+        <TextView
+            android:id="@+id/lblPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="$X.XX /each" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/lblDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:text="description" />
+
+    <TextView
+        android:id="@+id/lblRestaurant"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:text="Restaurant Name" />
+
+    <TextView
+        android:id="@+id/lblAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:text="address" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp">
+
+        <TextView
+            android:id="@+id/lblQuantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="Quantity:" />
+
+        <Spinner
+            android:id="@+id/spnQuantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/lblQuantity"
+            android:layout_alignParentRight="true"/>
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btnUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Update Quantity"
+        android:textColor="@android:color/background_light"
+        android:background="@color/colorAccent"/>
+
+</LinearLayout>

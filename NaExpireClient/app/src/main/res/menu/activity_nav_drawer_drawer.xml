@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_discounts"
+            android:icon="@mipmap/ic_restaurant_menu_black_24dp"
+            android:title="Find Discounts" />
+        <item
+            android:id="@+id/nav_shopping_cart"
+            android:icon="@mipmap/ic_shopping_cart_black_24dp"
+            android:title="Shopping Cart" />
+        <item
+            android:id="@+id/nav_orders"
+            android:icon="@mipmap/ic_inbox_black_24dp"
+            android:title="Orders" />
+        <item
+            android:id="@+id/nav_preferences"
+            android:icon="@mipmap/ic_settings_black_24dp"
+            android:title="Preferences" />
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@mipmap/ic_exit_to_app_black_24dp"
+            android:title="Logout" />
+    </group>
+</menu>

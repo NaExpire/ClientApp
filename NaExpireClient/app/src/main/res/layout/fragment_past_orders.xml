@@ -1,0 +1,39 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp"
+    tools:context="com.capstone.naexpire.naexpireclient.FragmentPastOrders">
+
+    <TextView
+        android:id="@+id/lblOrdersnothing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"/>
+
+    <Button
+        android:id="@+id/btnOrdersCurrent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/lblOrdersnothing"
+        android:text="Current Orders"
+        android:textColor="@color/colorAccent"
+        android:background="@android:color/transparent"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/lblOrdersnothing"
+        android:text="Past Orders"
+        android:textColor="@color/colorAccent"
+        android:background="@android:color/transparent"/>
+
+    <ListView
+        android:id="@+id/lstOrdersPast"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btnOrdersCurrent"/>
+
+</RelativeLayout>

@@ -1,0 +1,49 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.capstone.naexpire.naexpireclient.FragmentShoppingCart">
+
+    <Button
+        android:id="@+id/btnCartPlace"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="Place Order"
+        android:textColor="@android:color/background_light"
+        android:background="@color/colorAccent"/>
+
+    <Button
+        android:id="@+id/btnCartBack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:layout_above="@id/btnCartPlace"
+        android:text="Back to Deals"
+        android:textColor="@android:color/background_light"
+        android:background="@color/colorAccent"/>
+
+    <TextView
+        android:id="@+id/lblCartSubtotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/btnCartBack"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="5dp"
+        android:text="Subtotal: $X.XX"
+        android:textSize="20dp"
+        android:textStyle="bold"/>
+
+    <ListView
+        android:id="@+id/lstCart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_above="@id/lblCartSubtotal"/>
+
+</RelativeLayout>

@@ -1,0 +1,166 @@
+<RelativeLayout
+    android:id="@+id/layPreferences"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    tools:context="com.capstone.naexpire.naexpireclient.FragmentPreferences">
+
+    <TextView
+        android:id="@+id/lblPrefDivider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"/>
+
+    <Button
+        android:id="@+id/btnPrefFoods"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/lblPrefDivider"
+        android:text="Food Preferences"
+        android:textColor="@color/colorAccent"
+        android:background="@android:color/transparent"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/lblPrefDivider"
+        android:text="Account Details"
+        android:textColor="@color/colorAccent"
+        android:background="@android:color/transparent"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/btnPrefFoods">
+
+        <RelativeLayout
+            android:id="@+id/layPrefsScroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/lblPrefAcctDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="User Information"
+                android:textSize="16dp"
+                android:textStyle="bold"/>
+
+            <EditText
+                android:id="@+id/txtPrefUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_below="@id/lblPrefAcctDetails"
+                android:hint="Username"
+                android:inputType="text"/>
+
+            <EditText
+                android:id="@+id/txtPrefEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtPrefUsername"
+                android:hint="Email"
+                android:inputType="textEmailAddress"/>
+
+            <EditText
+                android:id="@+id/txtPrefPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtPrefEmail"
+                android:hint="Phone Number"
+                android:inputType="phone"/>
+
+            <TextView
+                android:id="@+id/lblPrefCard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_below="@id/txtPrefPhone"
+                android:text="Credit Cart Information"
+                android:textSize="16dp"
+                android:textStyle="bold"/>
+
+            <EditText
+                android:id="@+id/txtPrefCardName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/lblPrefCard"
+                android:hint="Name on Card"
+                android:inputType="textCapWords"
+                android:maxLength="16"/>
+
+            <EditText
+                android:id="@+id/txtPrefCardNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtPrefCardName"
+                android:hint="Credit Card Number"
+                android:inputType="numberPassword"
+                android:maxLength="16"/>
+
+            <EditText
+                android:id="@+id/txtPrefCVV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtPrefCardNumber"
+                android:hint="Security Code"
+                android:inputType="numberPassword"
+                android:maxLength="4" />
+
+            <TextView
+                android:id="@+id/lblPrefPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_below="@id/txtPrefCVV"
+                android:text="Change Password"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/txtPrefCurrentPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_below="@id/lblPrefPassword"
+                android:hint="Current Password"
+                android:inputType="textPassword"/>
+
+            <EditText
+                android:id="@+id/txtPrefPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtPrefCurrentPassword"
+                android:hint="New Password"
+                android:inputType="textPassword"/>
+
+            <EditText
+                android:id="@+id/txtPrefPassword2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtPrefPassword"
+                android:hint="Confirm New Password"
+                android:inputType="textPassword"/>
+
+            <Button
+                android:id="@+id/btnPrefSave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtPrefPassword2"
+                android:layout_centerHorizontal="true"
+                android:text="Save Changes"
+                android:textColor="@color/colorAccent"
+                android:background="@android:color/transparent"/>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+
+</RelativeLayout>

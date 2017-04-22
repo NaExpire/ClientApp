@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Cafe Redux</string>
+    <string name="title_activity_nav_drawer">ActivityNavDrawer</string>
+
+    <string name="first_login_descrip">Setting your food type prefrences will help find deals relevant to your interests.</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string-array name="filter_array">
+        <item>Alphabetical</item>
+        <item>Distance</item>
+        <item>Price: High to Low</item>
+        <item>Price: Low to High</item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

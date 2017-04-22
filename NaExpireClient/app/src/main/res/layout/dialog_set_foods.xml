@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
+
+    <TextView
+        android:id="@+id/lblSetFoodsHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="Set Food Type Preferences?"
+        android:textSize="20dp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/lblSetFoodsDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lblSetFoodsHeader"
+        android:layout_marginTop="5dp"
+        android:text="@string/first_login_descrip"
+        android:textSize="15dp"/>
+
+    <TextView
+        android:id="@+id/lblSetFoodsNothing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lblSetFoodsDescription"
+        android:layout_centerHorizontal="true"/>
+
+    <Button
+        android:id="@+id/btnSetFoodsLater"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lblSetFoodsDescription"
+        android:layout_toLeftOf="@id/lblSetFoodsNothing"
+        android:text="Later"
+        android:textColor="@color/colorAccent"
+        android:background="@android:color/transparent"/>
+
+    <Button
+        android:id="@+id/btnSetFoodsYes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lblSetFoodsDescription"
+        android:layout_toRightOf="@id/lblSetFoodsNothing"
+        android:text="Yes"
+        android:textColor="@color/colorAccent"
+        android:background="@android:color/transparent" />
+</RelativeLayout>

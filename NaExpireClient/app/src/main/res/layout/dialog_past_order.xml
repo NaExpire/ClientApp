@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp">
+
+    <TextView
+        android:id="@+id/lblPastRest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="Restaurant Name"
+        android:textSize="20dp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/lblPastOrderID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lblPastRest"
+        android:layout_centerHorizontal="true"
+        android:text="Odrer #XXX"
+        android:textSize="8dp"/>
+
+    <TextView
+        android:id="@+id/lblPastName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lblPastOrderID"
+        android:text="Item Names" />
+
+    <TextView
+        android:id="@+id/lblPastPrices"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lblPastOrderID"
+        android:layout_alignParentRight="true"
+        android:text="$X.XX"
+        android:textColor="@color/colorAccent"/>
+
+    <TextView
+        android:id="@+id/lblPastTotal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/lblPastPrices"
+        android:layout_alignParentRight="true"
+        android:text="$X.XX"
+        android:textColor="@color/colorAccent"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/lblPastTotal"
+        android:layout_alignBaseline="@id/lblPastTotal"
+        android:layout_marginRight="5dp"
+        android:text="Total:"/>
+
+    <TextView
+        android:id="@+id/lblPastTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lblPastTotal"
+        android:text="Time Placed"/>
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/lblPastTime"
+        android:layout_centerHorizontal="true"
+        android:stepSize="1"/>
+
+    <Button
+        android:id="@+id/btnPastSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/ratingBar"
+        android:text="Submit"
+        android:textColor="@android:color/background_light"
+        android:background="@color/colorAccent"/>
+</RelativeLayout>

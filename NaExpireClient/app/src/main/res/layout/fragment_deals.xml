@@ -1,0 +1,63 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp"
+    tools:context="com.capstone.naexpire.naexpireclient.FragmentDeals">
+
+    <RelativeLayout
+        android:id="@+id/rl"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+        <ImageButton
+            android:id="@+id/imgbtnCart"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            app:srcCompat="@mipmap/ic_shopping_cart_black_24dp"
+            android:background="@android:color/transparent"/>
+
+        <TextView
+            android:id="@+id/lblCartNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/imgbtnCart"
+            android:layout_alignRight="@id/imgbtnCart"
+            android:layout_marginBottom="8dp"
+            android:layout_marginRight="8dp"
+            android:text=""
+            android:textSize="16dp"
+            android:textColor="@color/colorAccent"/>
+
+        <TextView
+            android:id="@+id/lblFilterBy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_centerVertical="true"
+            android:text="Filter by:"
+            android:textSize="16dp"/>
+
+        <Spinner
+            android:id="@+id/spnFilter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/lblFilterBy"
+            android:layout_toLeftOf="@id/imgbtnCart"/>
+
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/lstDiscounts"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dp"
+        android:layout_below="@id/rl"
+        android:divider="@null"
+        android:dividerHeight="5dp"/>
+</RelativeLayout>
