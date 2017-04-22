@@ -1,5 +1,7 @@
 # Cafe Redux Client App
 
+## Getting Started
+
 ### Prerequisites
 
 Android Developer Studio
@@ -17,3 +19,11 @@ Standard install of Android Developer studio
 4. Preferences > Version Control > None > Ok
 5. Run Project
 ```
+
+## Authors
+Graeme Drucker
+
+Stephen Bielecki
+
+## Acknowledgements
+This project was created as part of a Capstone Project at Arizona State University in 2017. Members of the development group include: Graeme Drucker, Stephen Bielecki, Clinton Jarboe, Steven King, Nathan Fegard, and John Kevin Cava.
