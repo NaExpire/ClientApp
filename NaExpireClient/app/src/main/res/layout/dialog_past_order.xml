@@ -9,25 +9,30 @@
         android:id="@+id/lblPastRest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
         android:text="Restaurant Name"
-        android:textSize="20dp"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:textColor="#000"
+        android:textSize="20dp"/>
 
     <TextView
         android:id="@+id/lblPastOrderID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
         android:layout_below="@id/lblPastRest"
-        android:layout_centerHorizontal="true"
-        android:text="Odrer #XXX"
-        android:textSize="8dp"/>
+        android:text="Order #XXXXXXX"
+        android:textSize="16dp"/>
 
     <TextView
         android:id="@+id/lblPastName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="24dp"
         android:layout_below="@id/lblPastOrderID"
         android:text="Item Names" />
 
@@ -35,33 +40,39 @@
         android:id="@+id/lblPastPrices"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="24dp"
         android:layout_below="@id/lblPastOrderID"
         android:layout_alignParentRight="true"
         android:text="$X.XX"
-        android:textColor="@color/colorAccent"/>
+        android:textColor="@color/colorPrimary"/>
 
     <TextView
         android:id="@+id/lblPastTotal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="24dp"
         android:layout_below="@id/lblPastPrices"
         android:layout_alignParentRight="true"
         android:text="$X.XX"
-        android:textColor="@color/colorAccent"/>
+        android:textColor="@color/colorPrimary"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@id/lblPastTotal"
         android:layout_alignBaseline="@id/lblPastTotal"
-        android:layout_marginRight="5dp"
+        android:layout_marginRight="8dp"
         android:text="Total:"/>
 
     <TextView
         android:id="@+id/lblPastTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
         android:layout_below="@id/lblPastTotal"
         android:text="Time Placed"/>
 
@@ -69,18 +80,21 @@
         android:id="@+id/ratingBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
         android:layout_below="@id/lblPastTime"
         android:layout_centerHorizontal="true"
-        android:stepSize="1"/>
+        android:layout_marginTop="20dp"
+        android:stepSize="1" />
 
     <Button
         android:id="@+id/btnPastSubmit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_alignParentRight="true"
         android:layout_below="@id/ratingBar"
         android:text="Submit"
-        android:textColor="@android:color/background_light"
-        android:background="@color/colorAccent"/>
+        android:textColor="@color/colorPrimary"
+        android:background="@android:color/transparent"/>
 </RelativeLayout>

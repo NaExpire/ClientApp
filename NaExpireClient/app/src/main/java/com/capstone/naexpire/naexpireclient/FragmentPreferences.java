@@ -101,7 +101,7 @@ public class FragmentPreferences extends Fragment {
                     }
                     else if(!isValidPassword(password.getText().toString())){
                         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(FragmentPreferences.this.getContext());
-                        View dialogView = getActivity().getLayoutInflater().inflate(R.layout.dialog_valid_password, null);
+                        View dialogView = getActivity().getLayoutInflater().inflate(R.layout.dialog_password, null);
                         Button gotIt = (Button) dialogView.findViewById(R.id.btnDismiss);
 
                         dialogBuilder.setView(dialogView);
@@ -162,6 +162,7 @@ public class FragmentPreferences extends Fragment {
 
     protected void hideKeyboard(View view)
     {
+        view.clearFocus();
         InputMethodManager in = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         in.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }

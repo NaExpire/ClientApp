@@ -1,31 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:padding="10dp">
+    android:layout_width="match_parent" android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/lblConfirmHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:text="Confirm Your Account"
-        android:textSize="20dp"
-        android:textStyle="bold"/>
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:text="Confirm your account"
+        android:textStyle="bold"
+        android:textColor="#000"
+        android:textSize="20dp"/>
 
     <TextView
         android:id="@+id/lblConfirmDetail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
         android:layout_below="@id/lblConfirmHeader"
-        android:text="Enter the confirmation code you received in your email." />
+        android:text="Enter the code you received in your email"
+        android:textSize="16dp"/>
 
 
     <EditText
         android:id="@+id/txtConfirmCode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
         android:layout_below="@+id/lblConfirmDetail"
         android:inputType="number"
         android:hint="Confirmation Code" />
@@ -33,11 +40,14 @@
     <Button
         android:id="@+id/btnConfirm"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="36dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="8dp"
         android:layout_below="@+id/txtConfirmCode"
         android:layout_alignParentRight="true"
         android:text="Submit"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/colorPrimary"
         android:background="@android:color/transparent"/>
 
 </RelativeLayout>

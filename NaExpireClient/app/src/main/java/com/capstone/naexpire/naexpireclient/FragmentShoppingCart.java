@@ -116,10 +116,11 @@ public class FragmentShoppingCart extends Fragment {
                 final Button update = (Button) dialogView.findViewById(R.id.btnUpdate);
 
                 item.setText(adapter.getName(position));
-                price.setText("$"+adapter.getPrice(position));
+                price.setText("$"+adapter.getPrice(position)+" /each");
                 restaurant.setText(adapter.getRestaurant(position));
                 description.setText(adapter.getDescription(position));
-                address.setText(adapter.getAddress(position));
+                String[] a = adapter.getAddress(position).split(",");
+                address.setText(a[0]);
                 final int num = adapter.getCartQuantity(position);
                 Glide.with(FragmentShoppingCart.this.getContext()).load(adapter.getImage(position)).into(itemPic);
 

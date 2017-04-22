@@ -7,42 +7,50 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
         android:text="Use this card?"
-        android:textSize="16dp"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:textColor="#000"
+        android:textSize="20dp"/>
 
     <TextView
         android:id="@+id/lblConfirmCard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="16dp"
-        android:text="TextView" />
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:text="TextView"
+        android:textSize="16dp"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp">
+        android:layout_marginTop="20dp">
 
         <Button
             android:id="@+id/btnYes"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginRight="8dp"
             android:layout_alignParentRight="true"
             android:text="Yes"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/colorPrimary"
             android:background="@android:color/transparent"/>
 
         <Button
             android:id="@+id/btnNo"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginRight="8dp"
             android:layout_toLeftOf="@id/btnYes"
             android:text="No"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/colorPrimary"
             android:background="@android:color/transparent"/>
 
     </RelativeLayout>

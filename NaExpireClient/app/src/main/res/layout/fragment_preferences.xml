@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="5dp"
     android:focusable="true"
     android:focusableInTouchMode="true"
     tools:context="com.capstone.naexpire.naexpireclient.FragmentPreferences">
@@ -21,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/lblPrefDivider"
         android:text="Food Preferences"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/colorPrimary"
         android:background="@android:color/transparent"/>
 
     <Button
@@ -29,13 +28,26 @@
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@id/lblPrefDivider"
         android:text="Account Details"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/colorPrimary"
         android:background="@android:color/transparent"/>
+
+    <Button
+        android:id="@+id/btnPrefSave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="Save Changes"
+        android:textColor="@android:color/background_light"
+        android:background="@color/colorAccent"/>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_above="@id/btnPrefSave"
         android:layout_below="@id/btnPrefFoods">
 
         <RelativeLayout
@@ -147,16 +159,6 @@
                 android:layout_below="@id/txtPrefPassword"
                 android:hint="Confirm New Password"
                 android:inputType="textPassword"/>
-
-            <Button
-                android:id="@+id/btnPrefSave"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/txtPrefPassword2"
-                android:layout_centerHorizontal="true"
-                android:text="Save Changes"
-                android:textColor="@color/colorAccent"
-                android:background="@android:color/transparent"/>
 
         </RelativeLayout>
 

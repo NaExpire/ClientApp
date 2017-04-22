@@ -4,35 +4,41 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="16dp"
-        android:text="Are you sure you want to fulfill this order?"
-        android:textSize="16dp"
-        android:textStyle="bold"/>
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
+        android:text="Fulfill this order?"
+        android:textStyle="bold"
+        android:textColor="#000"
+        android:textSize="20dp"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp">
+        android:layout_marginTop="20dp">
 
         <Button
             android:id="@+id/btnFulfillYes"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
             android:layout_alignParentRight="true"
             android:text="Yes"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/colorPrimary"
             android:background="@android:color/transparent"/>
 
         <Button
             android:id="@+id/btnFulfillNo"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="36dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
             android:layout_toLeftOf="@id/btnFulfillYes"
             android:text="No"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/colorPrimary"
             android:background="@android:color/transparent"/>
 
     </RelativeLayout>

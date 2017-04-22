@@ -1,8 +1,6 @@
 package com.capstone.naexpire.naexpireclient;
 
 import android.content.Intent;
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -10,7 +8,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
-import android.widget.VideoView;
 
 import java.util.ArrayList;
 
@@ -25,18 +22,6 @@ public class ActivityRegFoodTypes extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reg_food_types);
         setTitle("Register"); //set activity title
-
-        final VideoView splashvideo = (VideoView) findViewById(R.id.splashVideo);
-        Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.splashvideo);
-        splashvideo.setVideoURI(uri);
-        splashvideo.start();
-
-        splashvideo.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mp) {
-                mp.setLooping(true);
-            }
-        });
 
         //dummy data
         foods.add("Mexican");

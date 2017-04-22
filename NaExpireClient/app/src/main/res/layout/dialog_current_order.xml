@@ -2,32 +2,37 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="5dp">
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/lblCurrentRest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
         android:text="Restaurant Name"
-        android:textSize="20dp"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:textColor="#000"
+        android:textSize="20dp"/>
 
     <TextView
         android:id="@+id/lblCurrentOrderID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
         android:layout_below="@id/lblCurrentRest"
-        android:layout_centerHorizontal="true"
-        android:text="Odrer #XXX"
-        android:textSize="8dp"/>
+        android:text="Order #XXXXXXX"
+        android:textSize="16dp"/>
 
     <TextView
         android:id="@+id/lblCurrentName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
         android:layout_below="@id/lblCurrentOrderID"
         android:text="Item Names" />
 
@@ -35,63 +40,76 @@
         android:id="@+id/lblCurrentPrices"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
         android:layout_below="@id/lblCurrentOrderID"
         android:layout_alignParentRight="true"
         android:text="$X.XX"
-        android:textColor="@color/colorAccent"/>
+        android:textColor="@color/colorPrimary"/>
 
     <TextView
         android:id="@+id/lblCurrentTotal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
+        android:layout_marginRight="24dp"
         android:layout_below="@id/lblCurrentPrices"
         android:layout_alignParentRight="true"
         android:text="$X.XX"
-        android:textColor="@color/colorAccent"/>
+        android:textColor="@color/colorPrimary"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@id/lblCurrentTotal"
         android:layout_alignBaseline="@id/lblCurrentTotal"
-        android:layout_marginRight="5dp"
+        android:layout_marginRight="8dp"
         android:text="Total:"/>
 
     <TextView
         android:id="@+id/lblCurrentTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginRight="24dp"
         android:layout_below="@id/lblCurrentTotal"
         android:text="Time Placed"/>
 
     <Button
         android:id="@+id/btnCurrentDirections"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_alignParentRight="true"
         android:layout_below="@id/lblCurrentTime"
         android:text="Get Directions"
-        android:textColor="@android:color/background_light"
-        android:background="@color/colorAccent"/>
+        android:textColor="@color/colorPrimary"
+        android:background="@android:color/transparent"/>
 
     <Button
         android:id="@+id/btnCurrentCall"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="5dp"
+        android:layout_marginRight="24dp"
+        android:layout_alignParentRight="true"
         android:layout_below="@id/btnCurrentDirections"
         android:text="Call Restaurant"
-        android:textColor="@android:color/background_light"
-        android:background="@color/colorAccent"/>
+        android:textColor="@color/colorPrimary"
+        android:background="@android:color/transparent"/>
 
     <Button
         android:id="@+id/btnCurrentFullfill"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="24dp"
+        android:layout_alignParentRight="true"
         android:layout_below="@id/btnCurrentCall"
         android:text="Fulfill Order"
-        android:textColor="@android:color/background_light"
-        android:background="@color/colorAccent"/>
+        android:textColor="@color/colorPrimary"
+        android:background="@android:color/transparent"/>
 </RelativeLayout>

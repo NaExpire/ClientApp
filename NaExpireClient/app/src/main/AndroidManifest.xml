@@ -4,14 +4,12 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/caferedux_launcher_circle"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/caferedux_launcher_circle"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".ActivityLogin"
-            android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".ActivityLogin">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,16 +20,12 @@
             android:name=".ActivityNavDrawer"
             android:label="@string/title_activity_nav_drawer"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".ActivityRegUserInfo"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity
-            android:name=".ActivityRegFoodTypes"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
+        <activity android:name=".ActivityRegister" />
+        <activity android:name=".ActivityRegFoodTypes"></activity>
     </application>
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
 </manifest>

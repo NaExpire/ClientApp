@@ -3,6 +3,7 @@ package com.capstone.naexpire.naexpireclient;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,14 +12,18 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-import android.net.Uri;
-import android.widget.MediaController;
-import android.widget.VideoView;
-import android.media.*;
 
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class ActivityLogin extends AppCompatActivity {
     private SharedPreferences sharedPref;
@@ -29,18 +34,6 @@ public class ActivityLogin extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        final VideoView splashvideo = (VideoView) findViewById(R.id.splashVideo);
-        Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.splashvideo);
-        splashvideo.setVideoURI(uri);
-        splashvideo.start();
-
-        splashvideo.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mp) {
-                mp.setLooping(true);
-            }
-        });
 
         sharedPref = getSharedPreferences("com.capstone.naexpire.PREFERENCE_FILE_KEY",
                 Context.MODE_PRIVATE);
@@ -76,6 +69,7 @@ public class ActivityLogin extends AppCompatActivity {
 
     protected void hideKeyboard(View view)
     {
+        view.clearFocus();
         InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         in.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
@@ -86,8 +80,9 @@ public class ActivityLogin extends AppCompatActivity {
         String enteredEmail = email.getText().toString();
         String enteredPass = password.getText().toString();
 
+        new login().execute("http://138.197.33.88/api/consumer/login/");
         //checks that both the email and password match the ones stored in shared preferences
-        boolean match = enteredEmail.equals(sharedPref.getString("email", "")) &&
+        /*boolean match = enteredEmail.equals(sharedPref.getString("email", "")) &&
                 enteredPass.equals(sharedPref.getString("password", ""));
 
         //if email and password are correct && both fields are filled
@@ -118,6 +113,8 @@ public class ActivityLogin extends AppCompatActivity {
                 });
             }
             else{
+                new login().execute("http://138.197.33.88/api/consumer/login/");
+
                 Intent intent = new Intent(this, ActivityNavDrawer.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent); //navigate to navigation drawer activity
@@ -125,7 +122,7 @@ public class ActivityLogin extends AppCompatActivity {
         }
         else if(enteredEmail.isEmpty() || enteredPass.isEmpty()) //if either field is blank
             Toast.makeText(this, "Fill all fields.", Toast.LENGTH_SHORT).show();
-        else Toast.makeText(this, "Incorrect email or password.", Toast.LENGTH_SHORT).show();
+        else Toast.makeText(this, "Incorrect email or password.", Toast.LENGTH_SHORT).show();*/
     }
 
     //user taps that they forgot their password
@@ -135,7 +132,93 @@ public class ActivityLogin extends AppCompatActivity {
 
     //user taps the register button
     public void clickRegister(View view){
-        Intent intent = new Intent(this, ActivityRegUserInfo.class);
+        Intent intent = new Intent(this, ActivityRegister.class);
         startActivity(intent);
+    }
+
+    private class login extends AsyncTask<String,String,String> {
+        @Override
+        protected String doInBackground(String... urls){
+            String line = null;
+            String loginStatus = null;
+            StringBuilder sb = new StringBuilder();
+            HttpURLConnection connection = null;
+
+            try {
+                URL requestURL = new URL(urls[0]);
+                connection = (HttpURLConnection) requestURL.openConnection();
+                connection.setDoOutput(true);
+                connection.setChunkedStreamingMode(0);
+                connection.setRequestMethod("POST");
+                connection.setRequestProperty("charset", "utf-8");
+                connection.setUseCaches(false);
+
+                String outputString = toJsonString();
+                connection.setRequestProperty("Content-Length", "" + outputString.getBytes().length);
+                connection.setRequestProperty("Content-Type", "application/json");
+
+                OutputStreamWriter writer = new OutputStreamWriter(connection.getOutputStream());
+                writer.write(outputString);
+                writer.flush();
+                writer.close();
+
+                int HttpResult = connection.getResponseCode();
+                if(HttpResult == HttpURLConnection.HTTP_OK){
+                    BufferedReader br = new BufferedReader(new InputStreamReader(
+                            connection.getInputStream(), "utf-8"
+                    ));
+                    while((line = br.readLine()) != null){
+                        sb.append(line + "\n");
+                    }
+                    br.close();
+
+                    try{
+                        JSONObject obj = new JSONObject(sb.toString());
+                        loginStatus = obj.getString("sessionID");
+                    }catch (Exception e){}
+
+                    android.util.Log.w(this.getClass().getSimpleName(),
+                            "Response Message: "+sb.toString());
+                }
+                else{
+                    android.util.Log.w(this.getClass().getSimpleName(),"Response Message: "+connection.getResponseMessage());
+                }
+            }
+            catch (MalformedURLException ex){ ex.printStackTrace(); }
+            catch (IOException e){ e.printStackTrace(); }
+            finally{ connection.disconnect(); }
+
+            return loginStatus;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            //store current session id
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString("sessionId", result);
+            editor.commit();
+
+            //Toast.makeText(getBaseContext(), "A verification link has been sent to your email", Toast.LENGTH_LONG).show();
+
+            Intent intent = new Intent(getBaseContext(), ActivityNavDrawer.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+        }
+    }
+
+    public String toJsonString() {//creates a new JSON string from stored movie data
+        String returnJ = "";
+        try{
+            JSONObject js = new JSONObject();
+            js.put("email", email.getText().toString());
+            js.put("password", password.getText().toString());
+            returnJ = js.toString();
+            android.util.Log.w(this.getClass().getSimpleName(),returnJ);
+        }
+        catch (Exception ex){
+            android.util.Log.w(this.getClass().getSimpleName(),
+                    "error converting to/from json");
+        }
+        return returnJ;
     }
 }

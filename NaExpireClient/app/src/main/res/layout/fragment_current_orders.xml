@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@id/lblOrdersNothing"
         android:text="Current Orders"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/colorPrimary"
         android:background="@android:color/transparent"/>
 
     <Button
@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/lblOrdersNothing"
         android:text="Past Orders"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/colorPrimary"
         android:background="@android:color/transparent"/>
 
     <ListView

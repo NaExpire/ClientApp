@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
@@ -23,11 +22,8 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -264,7 +260,7 @@ public class FragmentDeals extends Fragment {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id){
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(FragmentDeals.this.getContext());
-                View dialogView = getActivity().getLayoutInflater().inflate(R.layout.dialog_discount_info, null);
+                View dialogView = getActivity().getLayoutInflater().inflate(R.layout.dialog_deal_info, null);
                 final TextView itemName = (TextView) dialogView.findViewById(R.id.lblInfoItemName);
                 final TextView restName = (TextView) dialogView.findViewById(R.id.lblInfoRestName);
                 final TextView itemPrice = (TextView) dialogView.findViewById(R.id.lblInfoPrice);
@@ -278,7 +274,8 @@ public class FragmentDeals extends Fragment {
                 itemPrice.setText("$"+adapter.getPrice(position));
                 restName.setText(adapter.getRestaurant(position));
                 itemDesc.setText(adapter.getDescription(position));
-                restDist.setText(adapter.getAddress(position));
+                String[] a = adapter.getAddress(position).split(",");
+                restDist.setText(a[0]);
                 final int num = adapter.getQuantity(position) - adapter.getCartQuantity(position);
                 Glide.with(FragmentDeals.this.getContext()).load(adapter.getImage(position)).into(itemPic);
 
