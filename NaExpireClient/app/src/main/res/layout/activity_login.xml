@@ -1,44 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layLogin"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="5dp"
-    android:paddingRight="5dp"
     android:focusable="true"
     android:focusableInTouchMode="true"
+    android:background="@drawable/background"
     tools:context="com.capstone.naexpire.naexpireclient.ActivityLogin">
 
-    <TextView
-        android:id="@+id/lblLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+    <VideoView
+        android:id="@+id/splashVideo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:text="Login"
-        android:textSize="25dp"
-        android:textStyle="bold"/>
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:foregroundGravity="center"/>
+
+    <ImageView
+        android:id="@+id/imgLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="250dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginBottom="50dp"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        app:srcCompat="@drawable/splashlogo" />
+
 
     <EditText
         android:id="@+id/txtLoginEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/lblLogin"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_below="@+id/imgLogo"
         android:hint="Email"
-        android:text="g"
-        android:inputType="textEmailAddress" />
+        android:inputType="textEmailAddress"
+        android:backgroundTint="#fff"
+        android:fontFamily="sans-serif-medium"
+        android:textColor="#fff"
+        android:textColorHint="#fff"/>
 
     <EditText
         android:id="@+id/txtLoginPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
         android:layout_below="@id/txtLoginEmail"
         android:hint="Password"
-        android:text="7^ygvbnmM"
-        android:inputType="textPassword"/>
+        android:inputType="textPassword"
+        android:backgroundTint="#fff"
+        android:fontFamily="sans-serif-medium"
+        android:textColor="#fff"
+        android:textColorHint="#fff"/>
 
     <TextView
         android:id="@+id/lblLoginNothing"
@@ -50,12 +69,14 @@
     <Button
         android:id="@+id/btnLoginLogin"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="20dp"
         android:layout_below="@id/txtLoginPassword"
-        android:layout_toLeftOf="@id/lblLoginNothing"
         android:text="Login"
-        android:textColor="@color/colorAccent"
-        android:background="@android:color/transparent"
+        android:textColor="#fff"
+        android:background="@color/colorPrimary"
         android:onClick="clickLogin"/>
 
     <Button
@@ -63,20 +84,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="Forgot Password"
+        android:layout_marginBottom="0dp"
+        android:text="I forgot my password"
         android:textSize="10dp"
-        android:textColor="@color/colorAccent"
-        android:background="@android:color/transparent"
+        android:textColor="#fff"
+        android:background="#ccF6586A"
         android:onClick="clickForgot"/>
 
     <Button
         android:id="@+id/btnLoginRegister"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/txtLoginPassword"
-        android:layout_toRightOf="@id/lblLoginNothing"
-        android:text="Register"
-        android:textColor="@color/colorAccent"
+        android:layout_height="50dp"
+        android:layout_below="@id/btnLoginLogin"
+        android:text="Don't have an account? Sign up"
+        android:textColor="#fff"
         android:background="@android:color/transparent"
         android:onClick="clickRegister"/>
 

@@ -3,6 +3,8 @@ package com.capstone.naexpire.naexpireclient;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import org.json.JSONObject;
 
@@ -39,6 +42,18 @@ public class ActivityRegister extends AppCompatActivity {
 
         sharedPref = getSharedPreferences("com.capstone.naexpire.PREFERENCE_FILE_KEY",
                 Context.MODE_PRIVATE);
+
+        final VideoView splashvideo = (VideoView) findViewById(R.id.splashVideo);
+        Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.splashvideo);
+        splashvideo.setVideoURI(uri);
+        splashvideo.start();
+
+        splashvideo.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mp.setLooping(true);
+            }
+        });
 
         setTitle("Register"); //set activity title
 
