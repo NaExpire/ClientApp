@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -25,6 +26,15 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 
@@ -87,7 +97,7 @@ public class FragmentDeals extends Fragment {
         //initial data to be inserted once on the first time the app is run to set up dummy data
         //only to be used while there are no endpoints to get real deals data
         //Toast.makeText(FragmentDeals.this.getContext(), ""+sharedPref.getInt("fromRegister", 0), Toast.LENGTH_SHORT).show();
-        if(sharedPref.getInt("fromRegister", 0) == 2){
+       /*if(false){//sharedPref.getInt("fromRegister", 0) == 2){
             itemId.add("0");
             itemId.add("1");
             itemId.add("2");
@@ -238,11 +248,17 @@ public class FragmentDeals extends Fragment {
 
             dbDeals.close();
             dealsResult.close();
-        }
+        }*/
 
         if(numInCart>0) cartTotal.setText(""+numInCart);
 
         adapter.sortDiscounts(spinner.getSelectedItemPosition());
+
+        for(int i = 0; i < 20; i++) {
+            String uri = "http://138.197.33.88/api/consumer/deal/dealID:"+i+"/";
+            android.util.Log.w(this.getClass().getSimpleName(), "http: "+uri);
+            new getDeal().execute(uri);
+        }
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -357,6 +373,169 @@ public class FragmentDeals extends Fragment {
 
         return view;
     }
+
+    private class getDeal extends AsyncTask<String,String,String> {
+        private int mealId = -1;
+        private int quantity = 0, restId = 0;
+        private double price = 0.0;
+
+        @Override
+        protected String doInBackground(String... urls){
+            String line;
+            StringBuilder sb = new StringBuilder();
+            HttpURLConnection connection = null;
+
+            try {
+                URL requestURL = new URL(urls[0]);
+                connection = (HttpURLConnection) requestURL.openConnection();
+                connection.setRequestMethod("GET");
+
+                int HttpResult = connection.getResponseCode();
+                android.util.Log.w(this.getClass().getSimpleName(), "Response Code: "+HttpResult);
+
+                if(HttpResult == HttpURLConnection.HTTP_OK){
+                    BufferedReader br = new BufferedReader(new InputStreamReader(
+                            connection.getInputStream(), "utf-8"
+                    ));
+                    while((line = br.readLine()) != null){
+                        sb.append(line + "\n");
+                    }
+                    br.close();
+
+                    try{
+                        JSONObject obj = new JSONObject(sb.toString());
+                        mealId = obj.getInt("mealID");
+                        price = obj.getDouble("dealPrice");
+                        quantity = obj.getInt("quantity");
+                        restId = obj.getInt("restaurantID");
+                    }catch (Exception e){}
+
+                    SQLiteDatabase db = dbHelperDeals.getWritableDatabase();
+
+                    db.delete("deals", null,null);
+
+                    ContentValues values = new ContentValues();
+
+                    values.put("id", ""+mealId);
+                    //values.put("name", name.get(i));
+                    //values.put("restaurant", restname.get(i));
+                    //values.put("address", address.get(i));
+                    //values.put("description", description.get(i));
+                    values.put("price", ""+price);
+                    //values.put("image", image.get(i));
+                    values.put("quantity", ""+quantity);
+                    values.put("cartquantity", "0");
+                    db.insert("deals", null, values);
+
+                    db.close();
+
+                    android.util.Log.w(this.getClass().getSimpleName(),
+                            "Response Message: "+sb.toString());
+                }
+                else{
+                    android.util.Log.w(this.getClass().getSimpleName(),
+                            "Response Message: "+connection.getResponseMessage());
+                }
+            }
+            catch (MalformedURLException ex){ ex.printStackTrace(); }
+            catch (IOException e){ e.printStackTrace(); }
+            finally{ connection.disconnect(); }
+
+            return ""+mealId;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            if(Integer.parseInt(result) != -1){
+                String uri = "http://138.197.33.88/api/consumer/meal/mealID:"+result+"/";
+                //new getMeal().execute(uri);
+
+                //0 itemId
+                //1 name
+                //2 restaurant
+                //3 address
+                //4 description
+                //5 price
+                //6 quantity
+                //7 image
+                //8 cartQuantity
+                adapter.newItem(result, "", "", "", "", ""+price, ""+quantity,
+                        "@drawable/splashlogo.png", "0");
+            }
+        }
+    }
+
+    /*private class getMeal extends AsyncTask<String,String,String> {
+        @Override
+        protected String doInBackground(String... urls){
+            String line, description = "", name = "";
+            int restId = 0;
+            int quantity;
+            double price;
+            StringBuilder sb = new StringBuilder();
+            HttpURLConnection connection = null;
+
+            try {
+                URL requestURL = new URL(urls[0]);
+                connection = (HttpURLConnection) requestURL.openConnection();
+                connection.setRequestMethod("GET");
+
+                int HttpResult = connection.getResponseCode();
+                android.util.Log.w(this.getClass().getSimpleName(), "Response Code: "+HttpResult);
+
+                quantity = 0;
+                restId = 0;
+                price = 0.0;
+
+                if(HttpResult == HttpURLConnection.HTTP_OK){
+                    BufferedReader br = new BufferedReader(new InputStreamReader(
+                            connection.getInputStream(), "utf-8"
+                    ));
+                    while((line = br.readLine()) != null){
+                        sb.append(line + "\n");
+                    }
+                    br.close();
+
+                    try{
+                        JSONObject obj = new JSONObject(sb.toString());
+                        restId = obj.getInt("restaurantID");
+                        name = obj.getString("name");
+                        description = obj.getString("description");
+                    }catch (Exception e){}
+
+                    SQLiteDatabase db = dbHelperDeals.getWritableDatabase();
+
+                    db.delete("deals", null,null);
+
+                    ContentValues values = new ContentValues();
+
+                    values.put("name", name);
+                    values.put("description", description);
+                    db.insert("deals", null, values);
+
+                    db.close();
+
+                    android.util.Log.w(this.getClass().getSimpleName(),
+                            "Response Message: "+sb.toString());
+                }
+                else{
+                    android.util.Log.w(this.getClass().getSimpleName(),
+                            "Response Message: "+connection.getResponseMessage());
+                }
+            }
+            catch (MalformedURLException ex){ ex.printStackTrace(); }
+            catch (IOException e){ e.printStackTrace(); }
+            finally{ connection.disconnect(); }
+
+            return ""+mealId;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            String uri = "http://138.197.33.88/api/consumer/meal/mealID:"+result+"/";
+            new getMeal().execute(uri);
+        }
+    }*/
 
     @Override
     public void onDestroy() {

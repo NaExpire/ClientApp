@@ -108,11 +108,7 @@ public class ActivityRegister extends AppCompatActivity {
             editor.putString("password", password.getText().toString());
             editor.commit();
 
-            //new register().execute("http://138.197.33.88/api/consumer/register/");
-
-            Intent intent = new Intent(this, ActivityLogin.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent); //return to login activity
+            new register().execute("http://138.197.33.88/api/consumer/register/");
         }
         else if(!ready) Toast.makeText(this, "Fill All Fields", Toast.LENGTH_SHORT).show();
         else if(!valid){
@@ -186,6 +182,10 @@ public class ActivityRegister extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             Toast.makeText(getBaseContext(), "A verification link has been sent to your email", Toast.LENGTH_LONG).show();
+
+            Intent intent = new Intent(ActivityRegister.this.getBaseContext(), ActivityLogin.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent); //return to login activity
         }
     }
 

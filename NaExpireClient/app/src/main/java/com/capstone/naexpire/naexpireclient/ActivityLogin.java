@@ -155,7 +155,7 @@ public class ActivityLogin extends AppCompatActivity {
         @Override
         protected String doInBackground(String... urls){
             String line = null;
-            String loginStatus = null;
+            String loginStatus = "";
             StringBuilder sb = new StringBuilder();
             HttpURLConnection connection = null;
 
@@ -208,16 +208,19 @@ public class ActivityLogin extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            //store current session id
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putString("sessionId", result);
-            editor.commit();
+            if(!result.isEmpty()){
+                //store current session id
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("sessionId", result);
+                editor.commit();
 
-            //Toast.makeText(getBaseContext(), "A verification link has been sent to your email", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getBaseContext(), "A verification link has been sent to your email", Toast.LENGTH_LONG).show();
 
-            Intent intent = new Intent(getBaseContext(), ActivityNavDrawer.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
+                Intent intent = new Intent(getBaseContext(), ActivityNavDrawer.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+            else Toast.makeText(ActivityLogin.this, "Invalid login credentials", Toast.LENGTH_SHORT).show();
         }
     }
 
