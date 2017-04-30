@@ -68,6 +68,7 @@ public class FragmentPastOrders extends Fragment {
 
         Button current = (Button) view.findViewById(R.id.btnOrdersCurrent);
 
+        //navigate to current orders fragment when current orders button is tapped
         current.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,6 +91,7 @@ public class FragmentPastOrders extends Fragment {
                 final RatingBar rating = (RatingBar) dialogView.findViewById(R.id.ratingBar);
                 Button orderSubmit = (Button) dialogView.findViewById(R.id.btnPastSubmit);
 
+                //set dialog text values
                 DecimalFormat decimalFormat = new DecimalFormat("0.00");
                 itemName.setText(adapter.getName(position));
                 orderprices.setText("$"+decimalFormat.format(adapter.getPrice(position)));
@@ -103,6 +105,7 @@ public class FragmentPastOrders extends Fragment {
                 final AlertDialog dialog = dialogBuilder.create();
                 dialog.show();
 
+                //save rating when save changes tapped
                 orderSubmit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

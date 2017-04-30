@@ -38,7 +38,7 @@ public class FragmentEditFoodTypes extends Fragment {
         final SharedPreferences sharedPref = getActivity().getSharedPreferences("com.capstone.naexpire.PREFERENCE_FILE_KEY",
                 Context.MODE_PRIVATE);
 
-        //dummy data
+        //base food types
         foods.add("Mexican");
         foods.add("Cajun");
         foods.add("Vietnamese");
@@ -58,6 +58,7 @@ public class FragmentEditFoodTypes extends Fragment {
         foods.add("Turkish");
         foods.add("Caribbean");
 
+        //get previously checked food types
         String[] savedFoods  = sharedPref.getString("foods", "").split(",");
         for(int i = 0; i < savedFoods.length; i++){
             checked.add(savedFoods[i]);
@@ -70,6 +71,7 @@ public class FragmentEditFoodTypes extends Fragment {
         Button userprefs = (Button) view.findViewById(R.id.btnPrefUser);
         Button save = (Button) view.findViewById(R.id.btnPrefSaveFoods);
 
+        //switch to user prefs fragment if button is pressed
         userprefs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,14 +81,18 @@ public class FragmentEditFoodTypes extends Fragment {
             }
         });
 
+        //save changes is tapped
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //put all checked values into a comma spearated string
                 checked = adapter.getChecked();
                 String allChecked = checked.get(0);
                 for(int i = 1; i < checked.size(); i++){
                     allChecked += ","+checked.get(i);
                 }
+
+                //save to shared preferences
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putString("foods", allChecked);
                 editor.commit();

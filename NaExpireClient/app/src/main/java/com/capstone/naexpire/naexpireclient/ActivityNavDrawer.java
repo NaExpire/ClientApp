@@ -87,6 +87,7 @@ public class ActivityNavDrawer extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        //defines which action to take when differetn nav bar items are selected
         if (id == R.id.nav_discounts) {
             FragmentDeals fragmentDeals = new FragmentDeals();
             FragmentManager manager = getSupportFragmentManager();
@@ -104,7 +105,7 @@ public class ActivityNavDrawer extends AppCompatActivity
             FragmentManager manager = getSupportFragmentManager();
             manager.beginTransaction().replace(R.id.fragment_container, fragmentPreferences).commit();
         } else if (id == R.id.nav_logout) {
-            new logout().execute("http://138.197.33.88/api/consumer/logout/ ");
+            new logout().execute("http://138.197.33.88/api/consumer/logout/");
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -130,14 +131,11 @@ public class ActivityNavDrawer extends AppCompatActivity
                 connection.setUseCaches(false);
 
                 int HttpResult = connection.getResponseCode();
-                android.util.Log.w(this.getClass().getSimpleName(), "Response Code: "+HttpResult);
+                android.util.Log.w(this.getClass().getSimpleName(), "Logout Response Code: "+HttpResult);
 
                 if(HttpResult == HttpURLConnection.HTTP_OK) line = "true";
-                else{
-                    line = "false";
-                    android.util.Log.w(this.getClass().getSimpleName(),
+                else android.util.Log.w(this.getClass().getSimpleName(),
                             "Response Message: "+connection.getResponseMessage());
-                }
             }
             catch (MalformedURLException ex){ ex.printStackTrace(); }
             catch (IOException e){ e.printStackTrace(); }

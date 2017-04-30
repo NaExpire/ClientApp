@@ -53,6 +53,7 @@ public class FragmentCurrentOrders extends Fragment {
         //get all the entire current orders database
         Cursor result = dbCurrent.rawQuery("SELECT * FROM currentOrders", null);
 
+        //order of table columns
         //0 id
         //1 name
         //2 restaurant
@@ -133,28 +134,31 @@ public class FragmentCurrentOrders extends Fragment {
                     }
                 });
 
+                //fulfill order is tapped
                 orderFulfill.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        dialog.dismiss();
+                        dialog.dismiss(); //dismiss order info dialog
 
+                        //build + show confirm fulfill dialog
                         AlertDialog.Builder dialogBuilder2 = new AlertDialog.Builder(FragmentCurrentOrders.this.getContext());
                         View dialogView2 = getActivity().getLayoutInflater().inflate(R.layout.dialog_confirm_fulfill, null);
                         Button no = (Button) dialogView2.findViewById(R.id.btnFulfillNo);
                         Button yes = (Button) dialogView2.findViewById(R.id.btnFulfillYes);
-
                         dialogBuilder2.setView(dialogView2);
                         final AlertDialog dialog2 = dialogBuilder2.create();
                         dialog2.show();
 
+                        //no tapped
                         no.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                dialog.show();
-                                dialog2.dismiss();
+                                dialog.show(); //show order info dialog again
+                                dialog2.dismiss(); //dismiss confirm fulfill dialog
                             }
                         });
 
+                        //yes tapped
                         yes.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {

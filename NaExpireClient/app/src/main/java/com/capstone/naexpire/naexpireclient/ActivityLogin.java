@@ -82,13 +82,6 @@ public class ActivityLogin extends AppCompatActivity {
         });
     }
 
-    protected void hideKeyboard(View view)
-    {
-        view.clearFocus();
-        InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        in.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-    }
-
     //user taps the login button
     public void clickLogin(View view){
         //gets the entered email and password into strings
@@ -151,6 +144,7 @@ public class ActivityLogin extends AppCompatActivity {
         startActivity(intent);
     }
 
+    //async call to login endpoint
     private class login extends AsyncTask<String,String,String> {
         @Override
         protected String doInBackground(String... urls){
@@ -212,6 +206,7 @@ public class ActivityLogin extends AppCompatActivity {
                 //store current session id
                 SharedPreferences.Editor editor = sharedPref.edit();
                 editor.putString("sessionId", result);
+                editor.putInt("fromLogin", 1);
                 editor.commit();
 
                 //Toast.makeText(getBaseContext(), "A verification link has been sent to your email", Toast.LENGTH_LONG).show();
@@ -222,21 +217,28 @@ public class ActivityLogin extends AppCompatActivity {
             }
             else Toast.makeText(ActivityLogin.this, "Invalid login credentials", Toast.LENGTH_SHORT).show();
         }
+
+        public String toJsonString() {//creates a new JSON string from stored movie data
+            String returnJ = "";
+            try{
+                JSONObject js = new JSONObject();
+                js.put("email", email.getText().toString());
+                js.put("password", password.getText().toString());
+                returnJ = js.toString();
+                android.util.Log.w(this.getClass().getSimpleName(),returnJ);
+            }
+            catch (Exception ex){
+                android.util.Log.w(this.getClass().getSimpleName(),
+                        "error converting to/from json");
+            }
+            return returnJ;
+        }
     }
 
-    public String toJsonString() {//creates a new JSON string from stored movie data
-        String returnJ = "";
-        try{
-            JSONObject js = new JSONObject();
-            js.put("email", email.getText().toString());
-            js.put("password", password.getText().toString());
-            returnJ = js.toString();
-            android.util.Log.w(this.getClass().getSimpleName(),returnJ);
-        }
-        catch (Exception ex){
-            android.util.Log.w(this.getClass().getSimpleName(),
-                    "error converting to/from json");
-        }
-        return returnJ;
+    protected void hideKeyboard(View view)
+    {
+        view.clearFocus();
+        InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        in.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 }

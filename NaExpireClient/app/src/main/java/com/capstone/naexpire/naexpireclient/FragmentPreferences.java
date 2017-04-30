@@ -58,6 +58,7 @@ public class FragmentPreferences extends Fragment {
         email.setText(sharedPref.getString("email", ""));
         phone.setText(sharedPref.getString("phone", ""));
 
+        //navigate to food types fragment when food types button is pressed
         foods.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,6 +70,7 @@ public class FragmentPreferences extends Fragment {
             }
         });
 
+        //save changes tapped
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,29 +78,35 @@ public class FragmentPreferences extends Fragment {
                 editor.putString("username", username.getText().toString());
                 editor.putString("email", email.getText().toString());
                 editor.putString("phone", phone.getText().toString());
+
+                //if any card fields are filled
                 if(!cardName.getText().toString().isEmpty() || !cardNum.getText().toString().isEmpty() ||
                         !cardCvv.getText().toString().isEmpty()){
-                    if(cardNum.getText().toString().length() != 16){
+                    if(cardNum.getText().toString().length() != 16){ //enforce card # length is 16
                         Toast.makeText(FragmentPreferences.this.getContext(), "Invalid card number.", Toast.LENGTH_SHORT).show();
                     }
-                    else if(cardCvv.getText().toString().length() < 3){
+                    else if(cardCvv.getText().toString().length() < 3){ //enforce cvv length is > 2
                         Toast.makeText(FragmentPreferences.this.getContext(), "Invalid security code.", Toast.LENGTH_SHORT).show();
                     }
+                    //enforce all fields are filled
                     else if(cardName.getText().toString().isEmpty() || cardNum.getText().toString().isEmpty() ||
                             cardCvv.getText().toString().isEmpty()){
                         Toast.makeText(FragmentPreferences.this.getContext(), "Fill all fields.", Toast.LENGTH_SHORT).show();
                     }
-                    else{
+                    else{ //save values if everything is valid
                         editor.putString("cardName", cardName.getText().toString());
                         editor.putString("cardNumber", cardNum.getText().toString());
                         editor.putString("cardCvv", cardCvv.getText().toString());
                     }
                 }
+                //if any password fields are filled
                 if(!oldPass.getText().toString().isEmpty() || !password.getText().toString().isEmpty() ||
                         !cPassword.getText().toString().isEmpty()){
+                    //enforce current password is entered correctly
                     if(!sharedPref.getString("password","").equals(oldPass.getText().toString())){
                         Toast.makeText(FragmentPreferences.this.getContext(), "Current password incorrect.", Toast.LENGTH_SHORT).show();
                     }
+                    //enforce new password is valid
                     else if(!isValidPassword(password.getText().toString())){
                         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(FragmentPreferences.this.getContext());
                         View dialogView = getActivity().getLayoutInflater().inflate(R.layout.dialog_password, null);
@@ -116,6 +124,7 @@ public class FragmentPreferences extends Fragment {
                             }
                         });
                     }
+                    //save new password if all is valid
                     else if(password.getText().toString().equals(cPassword.getText().toString())){
                         editor.putString("password", password.getText().toString());
                     }
@@ -134,6 +143,7 @@ public class FragmentPreferences extends Fragment {
             }
         });
 
+        //logic to hide soft-keyboard if user taps outside of edit texts
         RelativeLayout layout = (RelativeLayout) view.findViewById(R.id.layPreferences);
         RelativeLayout layout2 = (RelativeLayout) view.findViewById(R.id.layPrefsScroll);
 

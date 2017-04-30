@@ -23,7 +23,7 @@ public class ActivityRegFoodTypes extends AppCompatActivity {
         setContentView(R.layout.activity_reg_food_types);
         setTitle("Register"); //set activity title
 
-        //dummy data
+        //load in base food types
         foods.add("Mexican");
         foods.add("Cajun");
         foods.add("Vietnamese");

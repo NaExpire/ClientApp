@@ -43,18 +43,6 @@ public class ActivityRegister extends AppCompatActivity {
         sharedPref = getSharedPreferences("com.capstone.naexpire.PREFERENCE_FILE_KEY",
                 Context.MODE_PRIVATE);
 
-        final VideoView splashvideo = (VideoView) findViewById(R.id.splashVideo);
-        Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.splashvideo);
-        splashvideo.setVideoURI(uri);
-        splashvideo.start();
-
-        splashvideo.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mp) {
-                mp.setLooping(true);
-            }
-        });
-
         setTitle("Register"); //set activity title
 
         firstName = (EditText) findViewById(R.id.txtRegUserFirst);
@@ -62,6 +50,16 @@ public class ActivityRegister extends AppCompatActivity {
         email = (EditText) findViewById(R.id.txtRegUserEmail);
         password = (EditText) findViewById(R.id.txtRegUserPassword);
         confirmPass = (EditText) findViewById(R.id.txtRegUserPassword2);
+        final VideoView splashvideo = (VideoView) findViewById(R.id.splashVideo);
+        Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.splashvideo);
+        splashvideo.setVideoURI(uri);
+        splashvideo.start();
+        splashvideo.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                mp.setLooping(true);
+            }
+        });
 
         RelativeLayout layout = (RelativeLayout) findViewById(R.id.layUserInfo);
 
@@ -74,13 +72,6 @@ public class ActivityRegister extends AppCompatActivity {
                 return false;
             }
         });
-    }
-
-    protected void hideKeyboard(View view)
-    {
-        view.clearFocus();
-        InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        in.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
     public void clickSubmit(View view){
@@ -110,15 +101,15 @@ public class ActivityRegister extends AppCompatActivity {
 
             new register().execute("http://138.197.33.88/api/consumer/register/");
         }
-        else if(!ready) Toast.makeText(this, "Fill All Fields", Toast.LENGTH_SHORT).show();
-        else if(!valid){
+        else if(!ready) Toast.makeText(this, "Fill all fields.", Toast.LENGTH_SHORT).show();
+        else if(!valid){ //if password isn't valid
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
             View dialogView = getLayoutInflater().inflate(R.layout.dialog_password, null);
             Button gotIt = (Button) dialogView.findViewById(R.id.btnDismiss);
-
             dialogBuilder.setView(dialogView);
             final AlertDialog dialog = dialogBuilder.create();
             dialog.show();
+
             hideKeyboard(view);
 
             gotIt.setOnClickListener(new View.OnClickListener() {
@@ -128,7 +119,7 @@ public class ActivityRegister extends AppCompatActivity {
                 }
             });
         }
-        else Toast.makeText(this, "passwords do not match", Toast.LENGTH_SHORT).show();
+        else Toast.makeText(this, "Passwords do not match.", Toast.LENGTH_SHORT).show();
     }
 
     private class register extends AsyncTask<String,String,String> {
@@ -187,25 +178,25 @@ public class ActivityRegister extends AppCompatActivity {
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent); //return to login activity
         }
-    }
 
-    public String toJsonString() {//creates a new JSON string from stored movie data
-        String returnJ = "";
-        try{
-            JSONObject js = new JSONObject();
-            js.put("firstName", firstName.getText().toString());
-            js.put("lastName", lastName.getText().toString());
-            js.put("email", email.getText().toString());
-            js.put("password", password.getText().toString());
-            js.put("personalPhoneNumber", "0123456789");
-            returnJ = js.toString();
-            android.util.Log.w(this.getClass().getSimpleName(),returnJ);
+        public String toJsonString() {//creates a new JSON string from stored movie data
+            String returnJ = "";
+            try{
+                JSONObject js = new JSONObject();
+                js.put("firstName", firstName.getText().toString());
+                js.put("lastName", lastName.getText().toString());
+                js.put("email", email.getText().toString());
+                js.put("password", password.getText().toString());
+                js.put("personalPhoneNumber", "0123456789");
+                returnJ = js.toString();
+                android.util.Log.w(this.getClass().getSimpleName(),returnJ);
+            }
+            catch (Exception ex){
+                android.util.Log.w(this.getClass().getSimpleName(),
+                        "error converting to/from json");
+            }
+            return returnJ;
         }
-        catch (Exception ex){
-            android.util.Log.w(this.getClass().getSimpleName(),
-                    "error converting to/from json");
-        }
-        return returnJ;
     }
 
     public static boolean isValidPassword(final String password) {
@@ -217,5 +208,12 @@ public class ActivityRegister extends AppCompatActivity {
         pattern = Pattern.compile(PASSWORD_PATTERN);
         matcher = pattern.matcher(password);
         return matcher.matches();
+    }
+
+    protected void hideKeyboard(View view)
+    {
+        view.clearFocus();
+        InputMethodManager in = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        in.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 }

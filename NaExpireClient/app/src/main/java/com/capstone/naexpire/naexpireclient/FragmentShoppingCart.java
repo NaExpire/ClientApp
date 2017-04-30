@@ -70,6 +70,7 @@ public class FragmentShoppingCart extends Fragment {
 
         final SQLiteDatabase db = dbHelperDeals.getReadableDatabase();
 
+        //fill shopping cart with elements added to the cart
         Cursor result = db.rawQuery("SELECT * FROM deals WHERE cartquantity <> '0'", null);
         //0 itemId
         //1 name
@@ -91,9 +92,11 @@ public class FragmentShoppingCart extends Fragment {
         db.close();
         result.close();
 
+        //set the subtotal
         subtotal = (TextView) view.findViewById(R.id.lblCartSubtotal);
         subtotal.setText(adapter.updateSubtotal());
 
+        //navigate to deals fragment if back to deals is tapped
         toDeals.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -115,6 +118,7 @@ public class FragmentShoppingCart extends Fragment {
                 ImageView itemPic = (ImageView) dialogView.findViewById(R.id.imgItem);
                 final Button update = (Button) dialogView.findViewById(R.id.btnUpdate);
 
+                //set dialog text values
                 item.setText(adapter.getName(position));
                 price.setText("$"+adapter.getPrice(position)+" /each");
                 restaurant.setText(adapter.getRestaurant(position));
@@ -124,6 +128,7 @@ public class FragmentShoppingCart extends Fragment {
                 final int num = adapter.getCartQuantity(position);
                 Glide.with(FragmentShoppingCart.this.getContext()).load(adapter.getImage(position)).into(itemPic);
 
+                //create number array for quantity spinner
                 String[] n = new String[num];
                 for(int i = 0; i < num; i++){
                     n[i] = ""+(i+1);
@@ -139,6 +144,7 @@ public class FragmentShoppingCart extends Fragment {
                 final AlertDialog dialog = dialogBuilder.create();
                 dialog.show();
 
+                //update cart value in local db if quantity changed
                 update.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -162,10 +168,11 @@ public class FragmentShoppingCart extends Fragment {
             }
         });
 
+        //place order tapped
         placeOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(adapter.getSize() == 0){
+                if(adapter.getSize() == 0){ //ensure shopping cart has at least 1 item
                     Toast.makeText(FragmentShoppingCart.this.getContext(), "Shopping cart is empty.",
                             Toast.LENGTH_SHORT).show();
                 }
@@ -176,6 +183,7 @@ public class FragmentShoppingCart extends Fragment {
                     final Button no = (Button) dialogView.findViewById(R.id.btnNo);
                     final Button yes = (Button) dialogView.findViewById(R.id.btnYes);
 
+                    //only display last 4 of credit card #
                     cardNum.setText("XXXX - XXXX - XXXX - "+sharedPref.getString("cardNumber","").substring(12));
 
                     dialogBuilder.setView(dialogView);
@@ -189,6 +197,7 @@ public class FragmentShoppingCart extends Fragment {
                         }
                     });
 
+                    //yes tapped
                     yes.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -205,6 +214,7 @@ public class FragmentShoppingCart extends Fragment {
                             SQLiteDatabase dbCurrent = dbHelperCurrent.getWritableDatabase();
                             SQLiteDatabase dbDeals = dbHelperDeals.getWritableDatabase();
 
+                            //insert order info into current orders db
                             int length = adapter.getSize();
                             for(int i = 0; i < length; i++){
                                 String currentId = ""+adapter.getId(i);
@@ -250,7 +260,7 @@ public class FragmentShoppingCart extends Fragment {
                     });
 
                 }
-                else{
+                else{ //if no credit card info is entered navigate to user prefs fragment
                     Toast.makeText(FragmentShoppingCart.this.getContext(),
                             "Enter credit card information.", Toast.LENGTH_LONG).show();
 
@@ -268,6 +278,7 @@ public class FragmentShoppingCart extends Fragment {
         subtotal.setText(adapter.updateSubtotal());
     }
 
+    //delete item at given position from local deals db
     public void deleteItem(int position){
         SQLiteDatabase dbDeals = dbHelperDeals.getWritableDatabase();
         ContentValues values = new ContentValues();

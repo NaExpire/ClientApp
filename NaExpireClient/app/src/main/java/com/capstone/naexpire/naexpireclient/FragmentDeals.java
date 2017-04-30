@@ -69,13 +69,12 @@ public class FragmentDeals extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_deals, container, false);
+        FragmentDeals.this.getActivity().setTitle("Discounts"); //set activity title
 
         sharedPref = getActivity().getSharedPreferences("com.capstone.naexpire.PREFERENCE_FILE_KEY",
                 Context.MODE_PRIVATE);
 
         dbHelperDeals = new DatabaseHelperDeals(getActivity().getApplicationContext());
-
-        FragmentDeals.this.getActivity().setTitle("Discounts"); //set activity title
 
         adapter = new ListAdapterDeals(FragmentDeals.this.getContext());
         ListView listview = (ListView) view.findViewById(R.id.lstDiscounts);
@@ -92,13 +91,11 @@ public class FragmentDeals extends Fragment {
         spAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(spAdapter);
 
-        //get discounts from database & put them in arraylists
-
-        //initial data to be inserted once on the first time the app is run to set up dummy data
-        //only to be used while there are no endpoints to get real deals data
-        //Toast.makeText(FragmentDeals.this.getContext(), ""+sharedPref.getInt("fromRegister", 0), Toast.LENGTH_SHORT).show();
-       /*if(false){//sharedPref.getInt("fromRegister", 0) == 2){
-            itemId.add("0");
+        //if the user just logged in
+       if(sharedPref.getInt("fromLogin", 0) == 1){
+           //initial data to be inserted once on the first time the app is run to set up dummy data
+           //only to be used while there are no endpoints to get real deals data
+            /*itemId.add("0");
             itemId.add("1");
             itemId.add("2");
             itemId.add("3");
@@ -145,78 +142,45 @@ public class FragmentDeals extends Fragment {
             image.add("android.resource://com.capstone.naexpire.naexpireclient/drawable/tacos2");
             image.add("android.resource://com.capstone.naexpire.naexpireclient/drawable/burger");
             image.add("android.resource://com.capstone.naexpire.naexpireclient/drawable/shrimp");
-            image.add("android.resource://com.capstone.naexpire.naexpireclient/drawable/carbonara");
+            image.add("android.resource://com.capstone.naexpire.naexpireclient/drawable/carbonara");*/
 
-            //reset current orders for new register
-            DatabaseHelperCurrentOrder dbHelperCurrent = new DatabaseHelperCurrentOrder(getActivity().getApplicationContext());
-            SQLiteDatabase dbCurrent = dbHelperCurrent.getWritableDatabase();
-            dbCurrent.delete("currentOrders", null,null);
-            dbCurrent.close();
-            dbHelperCurrent.close();
+           SharedPreferences.Editor editor = sharedPref.edit();
+           editor.putInt("fromLogin", 0); //set that they have not just come from login
+           editor.apply();
 
-            //reset past orders for new register
-            DatabaseHelperPastOrder dbHelperPast = new DatabaseHelperPastOrder(getActivity().getApplicationContext());
-            SQLiteDatabase dbPast = dbHelperPast.getWritableDatabase();
-            dbPast.delete("past", null,null);
-            dbPast.close();
-            dbHelperPast.close();
+           //reset local databases if just came from register
+            if(sharedPref.getInt("fromRegister", 0) == 2){
+                //reset current orders for new register
+                DatabaseHelperCurrentOrder dbHelperCurrent = new DatabaseHelperCurrentOrder(getActivity().getApplicationContext());
+                SQLiteDatabase dbCurrent = dbHelperCurrent.getWritableDatabase();
+                dbCurrent.delete("currentOrders", null,null);
+                dbCurrent.close();
+                dbHelperCurrent.close();
 
-            //reset food preferences
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putString("foods", "");
+                //reset past orders for new register
+                DatabaseHelperPastOrder dbHelperPast = new DatabaseHelperPastOrder(getActivity().getApplicationContext());
+                SQLiteDatabase dbPast = dbHelperPast.getWritableDatabase();
+                dbPast.delete("past", null,null);
+                dbPast.close();
+                dbHelperPast.close();
 
-            SQLiteDatabase db = dbHelperDeals.getWritableDatabase();
-
-            db.delete("deals", null,null);
-
-            for(int i = 0; i < name.size(); i++){
-                //Toast.makeText(FragmentDeals.this.getContext(), "insert "+i, Toast.LENGTH_SHORT).show();
-                ContentValues values = new ContentValues();
-
-                values.put("id", itemId.get(i));
-                values.put("name", name.get(i));
-                values.put("restaurant", restname.get(i));
-                values.put("address", address.get(i));
-                values.put("description", description.get(i));
-                values.put("price", ""+price.get(i));
-                values.put("image", image.get(i));
-                values.put("quantity", ""+quantity.get(i));
-                values.put("cartquantity", "0");
-                db.insert("deals", null, values);
-
-            }
-            db.close();
-
-            editor.putInt("fromRegister", 0);
-
-            SQLiteDatabase dbDeals = dbHelperDeals.getReadableDatabase();
-
-            Cursor dealsResult = dbDeals.rawQuery("SELECT * FROM deals", null);
-
-            numInCart = 0;
-            while(dealsResult.moveToNext()){
-                //0 itemId
-                //1 name
-                //2 restaurant
-                //3 address
-                //4 description
-                //5 price
-                //6 quantity
-                //7 image
-                //8 cartQuantity
-                adapter.newItem(dealsResult.getString(0), dealsResult.getString(1),
-                        dealsResult.getString(2), dealsResult.getString(3), dealsResult.getString(4),
-                        dealsResult.getString(5), dealsResult.getString(6), dealsResult.getString(7),
-                        dealsResult.getString(8));
-
-                numInCart += Integer.parseInt(dealsResult.getString(8));
+                //reset food preferences
+                editor.putString("foods", "");
+                editor.putInt("fromRegister", 0);
+                editor.apply();
             }
 
-            editor.putInt("numberInCart", numInCart);
-            editor.commit();
+            //empty local deals database
+           SQLiteDatabase db = dbHelperDeals.getWritableDatabase();
+           db.delete("deals", null,null);
 
-            dbDeals.close();
-            dealsResult.close();
+           //get deals from backend database
+           for(int i = 0; i < 30; i++) {
+               String uri = "http://138.197.33.88/api/consumer/deal/"+i+"/";
+               android.util.Log.w(this.getClass().getSimpleName(), "http: "+uri);
+               new getDeal().execute(uri);
+           }
+
         }
         else{
             SQLiteDatabase dbDeals = dbHelperDeals.getReadableDatabase();
@@ -225,6 +189,7 @@ public class FragmentDeals extends Fragment {
 
             numInCart = 0;
             while(dealsResult.moveToNext()){
+                //order of columns in db
                 //0 id
                 //1 name
                 //2 restaurant
@@ -248,29 +213,21 @@ public class FragmentDeals extends Fragment {
 
             dbDeals.close();
             dealsResult.close();
-        }*/
+        }
 
         if(numInCart>0) cartTotal.setText(""+numInCart);
 
+        //initial sort of list items
         adapter.sortDiscounts(spinner.getSelectedItemPosition());
-
-        for(int i = 0; i < 20; i++) {
-            String uri = "http://138.197.33.88/api/consumer/deal/dealID:"+i+"/";
-            android.util.Log.w(this.getClass().getSimpleName(), "http: "+uri);
-            new getDeal().execute(uri);
-        }
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                adapter.sortDiscounts(position);
+                adapter.sortDiscounts(position); //sort based on spinner seleciton
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parentView) {
-                // your code here
-            }
-
+            public void onNothingSelected(AdapterView<?> parentView) {}
         });
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener(){
@@ -286,20 +243,24 @@ public class FragmentDeals extends Fragment {
                 ImageView itemPic = (ImageView) dialogView.findViewById(R.id.imgInfoPicture);
                 final Button cart = (Button) dialogView.findViewById(R.id.btnInfoCart);
 
+                //set text & image for dialog
                 itemName.setText(adapter.getName(position));
                 itemPrice.setText("$"+adapter.getPrice(position));
                 restName.setText(adapter.getRestaurant(position));
                 itemDesc.setText(adapter.getDescription(position));
                 String[] a = adapter.getAddress(position).split(",");
-                restDist.setText(a[0]);
+                if(a[0] != null) restDist.setText(a[0]);
+                else restDist.setText(adapter.getAddress(position));
                 final int num = adapter.getQuantity(position) - adapter.getCartQuantity(position);
                 Glide.with(FragmentDeals.this.getContext()).load(adapter.getImage(position)).into(itemPic);
 
+                //create array to load quantity spinner
                 String[] n = new String[num];
                 for(int i = 0; i < num; i++){
                     n[i] = ""+(i+1);
                 }
 
+                //if not all deals are in cart
                 if(adapter.getCartQuantity(position) < adapter.getQuantity(position)){
                     final Spinner mspin=(Spinner) dialogView.findViewById(R.id.spnInfoQuantity);
                     final ArrayAdapter<String> sAdapter = new ArrayAdapter<String>(FragmentDeals.this.getContext(),android.R.layout.simple_spinner_item, n);
@@ -309,6 +270,7 @@ public class FragmentDeals extends Fragment {
                     final AlertDialog dialog = dialogBuilder.create();
                     dialog.show();
 
+                    //add to cart tapped
                     cart.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -316,20 +278,15 @@ public class FragmentDeals extends Fragment {
                             int cartNum = adapter.getCartQuantity(position);
                             adapter.setCartQuantity(position, cartNum + amount);
 
+                            //update quantity in local deals db
                             SQLiteDatabase dbDeals = dbHelperDeals.getWritableDatabase();
                             ContentValues values = new ContentValues();
-
                             values.put("cartQuantity", ""+(cartNum + amount));
-
                             String[] selectionArgs = {""+adapter.getId(position)}; //select by matching id
                             dbDeals.update("deals", values, "id = ?", selectionArgs);
-
                             dbDeals.close();
 
-                            if(cartNum == adapter.getQuantity(position)){
-                                adapter.notifyDataSetChanged();
-                            }
-                            else adapter.notifyDataSetChanged();
+                            adapter.notifyDataSetChanged();
 
                             numInCart += amount;
                             SharedPreferences.Editor editor = sharedPref.edit();
@@ -344,8 +301,8 @@ public class FragmentDeals extends Fragment {
                 }
                 else{ //if all the deals are in the user's cart already
                     v.setVisibility(View.GONE);
-                    itemPrice.setText("Sold Out");
-                    cart.setText("Back to Deals");
+                    itemPrice.setText("Sold Out"); //show that the deal is sold out
+                    cart.setText("Back to Deals"); //change add to cart button text
 
                     dialogBuilder.setView(dialogView);
                     final AlertDialog dialog = dialogBuilder.create();
@@ -362,6 +319,7 @@ public class FragmentDeals extends Fragment {
             }
         });
 
+        //cart icon tapped
         goToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -378,6 +336,7 @@ public class FragmentDeals extends Fragment {
         private int mealId = -1;
         private int quantity = 0, restId = 0;
         private double price = 0.0;
+        private String itemName = "", restName = "", restAddress = "";
 
         @Override
         protected String doInBackground(String... urls){
@@ -391,7 +350,7 @@ public class FragmentDeals extends Fragment {
                 connection.setRequestMethod("GET");
 
                 int HttpResult = connection.getResponseCode();
-                android.util.Log.w(this.getClass().getSimpleName(), "Response Code: "+HttpResult);
+                android.util.Log.w(this.getClass().getSimpleName(), "Get Deal Response Code: "+HttpResult);
 
                 if(HttpResult == HttpURLConnection.HTTP_OK){
                     BufferedReader br = new BufferedReader(new InputStreamReader(
@@ -402,40 +361,38 @@ public class FragmentDeals extends Fragment {
                     }
                     br.close();
 
-                    try{
+                    try{ //get deal values
                         JSONObject obj = new JSONObject(sb.toString());
                         mealId = obj.getInt("mealID");
                         price = obj.getDouble("dealPrice");
                         quantity = obj.getInt("quantity");
                         restId = obj.getInt("restaurantID");
+                        itemName = obj.getString("itemName");
+                        restName = obj.getString("restaurantName");
+                        restAddress = obj.getString("restaurantAddress");
                     }catch (Exception e){}
 
+                    //insert values into local deals db
                     SQLiteDatabase db = dbHelperDeals.getWritableDatabase();
-
-                    db.delete("deals", null,null);
-
                     ContentValues values = new ContentValues();
-
                     values.put("id", ""+mealId);
-                    //values.put("name", name.get(i));
-                    //values.put("restaurant", restname.get(i));
-                    //values.put("address", address.get(i));
+                    values.put("name", itemName);
+                    values.put("restaurant", restName);
+                    values.put("address", restAddress);
                     //values.put("description", description.get(i));
                     values.put("price", ""+price);
-                    //values.put("image", image.get(i));
+                    //change this when real images get returned
+                    values.put("image", "@drawable/caferedux_launcher_circle.png");
                     values.put("quantity", ""+quantity);
                     values.put("cartquantity", "0");
                     db.insert("deals", null, values);
-
                     db.close();
 
                     android.util.Log.w(this.getClass().getSimpleName(),
                             "Response Message: "+sb.toString());
                 }
-                else{
-                    android.util.Log.w(this.getClass().getSimpleName(),
+                else android.util.Log.w(this.getClass().getSimpleName(),
                             "Response Message: "+connection.getResponseMessage());
-                }
             }
             catch (MalformedURLException ex){ ex.printStackTrace(); }
             catch (IOException e){ e.printStackTrace(); }
@@ -446,9 +403,7 @@ public class FragmentDeals extends Fragment {
 
         @Override
         protected void onPostExecute(String result) {
-            if(Integer.parseInt(result) != -1){
-                String uri = "http://138.197.33.88/api/consumer/meal/mealID:"+result+"/";
-                //new getMeal().execute(uri);
+            if(Integer.parseInt(result) != -1){ //if deal existed
 
                 //0 itemId
                 //1 name
@@ -459,83 +414,11 @@ public class FragmentDeals extends Fragment {
                 //6 quantity
                 //7 image
                 //8 cartQuantity
-                adapter.newItem(result, "", "", "", "", ""+price, ""+quantity,
-                        "@drawable/splashlogo.png", "0");
+                adapter.newItem(result, itemName, restName, restAddress, "", ""+price, ""+quantity,
+                        "@drawable/caferedux_launcher_circle.png", "0");
             }
         }
     }
-
-    /*private class getMeal extends AsyncTask<String,String,String> {
-        @Override
-        protected String doInBackground(String... urls){
-            String line, description = "", name = "";
-            int restId = 0;
-            int quantity;
-            double price;
-            StringBuilder sb = new StringBuilder();
-            HttpURLConnection connection = null;
-
-            try {
-                URL requestURL = new URL(urls[0]);
-                connection = (HttpURLConnection) requestURL.openConnection();
-                connection.setRequestMethod("GET");
-
-                int HttpResult = connection.getResponseCode();
-                android.util.Log.w(this.getClass().getSimpleName(), "Response Code: "+HttpResult);
-
-                quantity = 0;
-                restId = 0;
-                price = 0.0;
-
-                if(HttpResult == HttpURLConnection.HTTP_OK){
-                    BufferedReader br = new BufferedReader(new InputStreamReader(
-                            connection.getInputStream(), "utf-8"
-                    ));
-                    while((line = br.readLine()) != null){
-                        sb.append(line + "\n");
-                    }
-                    br.close();
-
-                    try{
-                        JSONObject obj = new JSONObject(sb.toString());
-                        restId = obj.getInt("restaurantID");
-                        name = obj.getString("name");
-                        description = obj.getString("description");
-                    }catch (Exception e){}
-
-                    SQLiteDatabase db = dbHelperDeals.getWritableDatabase();
-
-                    db.delete("deals", null,null);
-
-                    ContentValues values = new ContentValues();
-
-                    values.put("name", name);
-                    values.put("description", description);
-                    db.insert("deals", null, values);
-
-                    db.close();
-
-                    android.util.Log.w(this.getClass().getSimpleName(),
-                            "Response Message: "+sb.toString());
-                }
-                else{
-                    android.util.Log.w(this.getClass().getSimpleName(),
-                            "Response Message: "+connection.getResponseMessage());
-                }
-            }
-            catch (MalformedURLException ex){ ex.printStackTrace(); }
-            catch (IOException e){ e.printStackTrace(); }
-            finally{ connection.disconnect(); }
-
-            return ""+mealId;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            String uri = "http://138.197.33.88/api/consumer/meal/mealID:"+result+"/";
-            new getMeal().execute(uri);
-        }
-    }*/
 
     @Override
     public void onDestroy() {
